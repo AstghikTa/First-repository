@@ -1,79 +1,62 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-import {ref} from 'vue'
+<script >
 
-let count = ref(0);
-console.log(count);
 
-function increment(){
-  count.value++;
+export default{
+
+data(){
+  return{
+email: '',
+isEmailValid: false,
+
+  };
+},
+methods: {
+  openEmailPrompt(){
+    let email = prompt('input your email');
+    if(!email){
+this.isEmailValid = false;      
+return;
+    } 
+    email = email.trim();
+    this.email = email;
+    console.log(email);
+   const isValid = this.checkIsEmailValid(email);
+   this.isEmailValid = isValid;
+  },
+ checkIsEmailValid(email){
+    const regEmail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    return regEmail.test(email);
+  }
+
 }
 
-function increment10(){
-  count.value = count.value + 10;
+
 }
 
-function decrement(){
-  count.value--;
-}
-
-function decrement10(){
-  count.value = count.value - 10;
-}
-
-function reset(){
-  count.value=0;
-}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
   <main>
-    <TheWelcome />
+   
+<button @click="openEmailPrompt()">input your email</button>
+<div v-if="email">
+  <h1 class="green" v-if="isEmailValid">{{ email }}</h1>
+<h1 class="red" v-else>{{ email }}</h1>
+</div>
 
-    <button @click="decrement()">-</button>
-    <button @click="decrement10()">-10</button>
-    <span>{{ count }}</span>
-    <button @click="increment()">+</button>
-    <button @click="increment10()">+10</button>
-    <button @click="reset()">reset</button>
-    
+<h4>{{ `The email is ${isEmailValid ? 'valid': 'invalid'}` }}</h4>
+
   </main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+.red{
+  border: 1px solid red;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+.green{
+  border: 1px solid green;
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
 }
 </style>
