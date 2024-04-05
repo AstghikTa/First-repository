@@ -26,6 +26,10 @@ return;
  checkIsEmailValid(email){
     const regEmail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
     return regEmail.test(email);
+  },
+  reset(){
+    this.email = '';
+    this.isEmailValid = false;
   }
 
 }
@@ -39,12 +43,13 @@ return;
   <main>
    
 <button @click="openEmailPrompt()">input your email</button>
+<button @click="reset">Reset</button>
 <div v-if="email">
   <h1 class="green" v-if="isEmailValid">{{ email }}</h1>
 <h1 class="red" v-else>{{ email }}</h1>
 </div>
 
-<h4>{{ `The email is ${isEmailValid ? 'valid': 'invalid'}` }}</h4>
+<h4 v-if="email">{{ `The email is ${isEmailValid ? 'valid': 'invalid'}` }}</h4>
 
   </main>
 </template>
