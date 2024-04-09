@@ -16,6 +16,11 @@ props: {
 
     },
 
+},
+methods: {
+    onButtonClick(){
+this.$emit('currencyChange');
+    }
 }
 }
 
@@ -24,6 +29,6 @@ props: {
 <template>
 <div> 
 <Name :value="fruit.name" /> <Price :value="fruit.price" /> <Description :value="fruit.description" />
-
+<button @click="onButtonClick"> Change the currency</button>
 </div>
 </template>
